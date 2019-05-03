@@ -3,7 +3,7 @@
 
 from keras.models import load_model
 from keras.preprocessing.image import ImageDataGenerator
-
+import math
 
 weights_path = "./data/weights"
 test_data_path = "./data/test_stg1/"
@@ -31,9 +31,9 @@ for i in range(5):
             class_mode=None)
     images_list = test_generator.filenames
     if i == 0:
-        pred_res = InceptionV3_model.predict_generator(test_generator, test_samples_nums)
+        pred_res = InceptionV3_model.predict_generator(test_generator, math.ceil(test_samples_nums/batch_size))
     else:
-        pred_res += InceptionV3_model.predict_generator(test_generator, test_samples_nums)
+        pred_res += InceptionV3_model.predict_generator(test_generator, math.ceil(test_samples_nums/batch_size))
 
 pred_res /= 5
 
